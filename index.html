@@ -386,6 +386,16 @@ Change widths as necessary
     <div id="content">
         <div class="g3">
 <h1 id="pyalm-docs">PyALM Docs</h1>
+<h2 id="contents">Contents</h2>
+<ol>
+<li>Basic usage<ol>
+<li>Summary level information</li>
+<li>More detailed information</li>
+</ol>
+</li>
+<li>Working with histories</li>
+<li>Working with events</li>
+</ol>
 <h2 id="basic-usage">Basic usage</h2>
 <h3 id="summary-level-information">Summary Level Information</h3>
 <p>After installation (see the README) import the library and call the API give a doi and 
@@ -419,7 +429,7 @@ attribute of the response:  </p>
 </pre></div>
 
 <div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">article</span><span class="o">.</span><span class="n">views</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="go">29944</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="go">30144</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">article</span><span class="o">.</span><span class="n">citations</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a><span class="go">7</span>
 </pre></div>
@@ -434,10 +444,51 @@ multiple DOIs are requested then the returned object will be a list.
 <a name="docs--examples--example.py-idio-pycon-pyg.html-6"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">articles</span><span class="p">:</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-7"></a><span class="gp">... </span>    <span class="k">print</span> <span class="n">article</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="s">&quot;DOI:&quot;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">doi</span><span class="p">,</span> <span class="s">&quot;Views:&quot;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">views</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-8"></a><span class="gp">...</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-9"></a><span class="go">Ecological Guild Evolution and the Discovery of the World&#39;s Smallest Vertebrate DOI: 10.1371/journal.pone.0029797 Views: 29944</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-10"></a><span class="go">Mitochondrial Electron Transport Is the Cellular Target of the Oncology Drug Elesclomol DOI: 10.1371/journal.pone.0029798 Views: 3462</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-9"></a><span class="go">Ecological Guild Evolution and the Discovery of the World&#39;s Smallest Vertebrate DOI: 10.1371/journal.pone.0029797 Views: 30144</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-10"></a><span class="go">Mitochondrial Electron Transport Is the Cellular Target of the Oncology Drug Elesclomol DOI: 10.1371/journal.pone.0029798 Views: 3515</span>
 </pre></div></p>
 <h3 id="more-detailed-information">More Detailed Information</h3>
+<p>To obtain more detailed information on each ALM source from the ALM API a request should 
+be made for from detailed information. The options available are <code>event</code> which provides 
+information on the specific events contributing to an ALM count. For instance, this will 
+provide information on the individual tweets contributing to the overall count. The
+<code>history</code> option provides information on the ALM over a series of timepoints. These
+timepoints are those when the ALM App polled the data source rather than the date or time
+of specific events. Finally the <code>detail</code> level provides both event and history data.</p>
+<p>For each level of detail a specific set of sources can be specified from one to a list,
+to all (by omitting the <code>source</code> option). Specific sources are then available via the 
+<code>sources</code> attribute of the returned object.</p>
+<div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span> <span class="o">=</span> <span class="n">alm</span><span class="o">.</span><span class="n">get_alm</span><span class="p">(</span><span class="s">&quot;10.1371/journal.pone.0029797&quot;</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="s">&quot;event&quot;</span><span class="p">,</span> <span class="n">sourc</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="go">&lt;10.1371/journal.pone.0029797&quot;, info=&quot;event&quot;, source                         =&quot;crossref&quot;)</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a><span class="go">&lt;Source CrossRef:7&gt;</span>
+</pre></div>
+
+<p>Quantitative information is available for the requested sources whether the info level
+is set to <code>event</code>, <code>history</code>, or <code>detail</code>. Metrics are also divided into the same
+categories provided by summary level info (<code>views</code>, <code>shares</code>, 
+<code>bookmarks</code>, <code>citations</code>)</p>
+<div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;Total cites from Crossref:&#39;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">t</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="go">&lt; Crossref:&#39;, article.sources[&#39;crossref&#39;].metrics.to                         tal</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="go">Total cites from Crossref: 7</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;..is the same as # cites:&#39;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">ci</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-5"></a><span class="go">&lt; # cites:&#39;, article.sources[&#39;crossref&#39;].metrics.cit                         ations</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-6"></a><span class="go">..is the same as # cites: 7</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-7"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;...and no shares:&#39;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">shares</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-8"></a><span class="go">...and no shares: None</span>
+</pre></div>
+
+<p>The event information is available via the <code>events</code> attribute on the source. Event data 
+is not currently parsed from the JSON object and needs to be handled by the user on a 
+source by source basis.</p>
+<div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="go">&gt;&gt;&gt;</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;The first recorded Crossref citation of the article:</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">s</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="go">&lt;ed Crossref citation of the article:\n&#39;, article.so                         urces[&#39;crossref&#39;].events[</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-5"></a><span class="go">&lt;e article:\n&#39;, article.sources[&#39;crossref&#39;].events[0                         ]</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-6"></a><span class="go">The first recorded Crossref citation of the article:</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-7"></a><span class="go">{u&#39;event_url&#39;: u&#39;http://dx.doi.org/10.1007/s13127-013-0152-4&#39;, u&#39;event&#39;: {u&#39;journal_abbreviation&#39;: u&#39;Org Divers Evol&#39;, u&#39;article_title&#39;: u&#39;New insights into the systematics and molecular phylogeny of the Malagasy snake genus Liopholidophis suggest at least one rapid reversal of extreme sexual dimorphism in tail length&#39;, u&#39;doi&#39;: u&#39;10.1007/s13127-013-0152-4&#39;, u&#39;contributors&#39;: {u&#39;contributor&#39;: [{u&#39;first_author&#39;: u&#39;true&#39;, u&#39;surname&#39;: u&#39;Glaw&#39;, u&#39;given_name&#39;: u&#39;Frank&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;first&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Kucharzewski&#39;, u&#39;given_name&#39;: u&#39;Christoph&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Nagy&#39;, u&#39;given_name&#39;: u&#39;Zolt\xe1n T.&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Hawlitschek&#39;, u&#39;given_name&#39;: u&#39;Oliver&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Vences&#39;, u&#39;given_name&#39;: u&#39;Miguel&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}]}, u&#39;journal_title&#39;: u&#39;Organisms Diversity &amp; Evolution&#39;, u&#39;fl_count&#39;: u&#39;0&#39;, u&#39;issn&#39;: [u&#39;1439-6092&#39;, u&#39;1618-1077&#39;], u&#39;year&#39;: u&#39;2013&#39;, u&#39;publication_type&#39;: u&#39;full_text&#39;}}</span>
+</pre></div>
         </div>
     </div>
     </body>
