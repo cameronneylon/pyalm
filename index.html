@@ -432,15 +432,16 @@ attribute of the response:  </p>
 </pre></div>
 
 <div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span><span class="o">.</span><span class="n">views</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="go">30144</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="go">30169</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span><span class="o">.</span><span class="n">citations</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a><span class="go">7</span>
 </pre></div>
 
 <p>If a single DOI is given then the returned object will be an ArticleALM object. If 
-multiple DOIs are requested then the returned object will be a list.
+multiple DOIs are requested then the returned object will be a list. Multiple DOIs 
+should be passed to the <code>get</code> method as a list of strings.</p>
 <div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">articles</span> <span class="o">=</span> <span class="n">alm</span><span class="o">.</span><span class="n">get_alm</span><span class="p">(</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="gp">... </span>        <span class="s">&quot;10.1371/journal.pone.0029797,10.1371/journal.pone.0029798&quot;</span><span class="p">,</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="gp">... </span>        <span class="p">[</span><span class="s">&quot;10.1371/journal.pone.0029797&quot;</span><span class="p">,</span><span class="s">&quot;10.1371/journal.pone.0029798&quot;</span><span class="p">],</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="gp">... </span>        <span class="n">info</span><span class="o">=</span><span class="s">&quot;summary&quot;</span><span class="p">)</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">articles</span><span class="p">)</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-5"></a><span class="go">2</span>
@@ -448,9 +449,10 @@ multiple DOIs are requested then the returned object will be a list.
 <a name="docs--examples--example.py-idio-pycon-pyg.html-7"></a><span class="gp">... </span>    <span class="k">print</span> <span class="n">article</span><span class="o">.</span><span class="n">title</span><span class="p">,</span><span class="s">&quot;DOI:&quot;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">doi</span><span class="p">,</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-8"></a><span class="gp">... </span>    <span class="k">print</span> <span class="s">&quot;Views:&quot;</span><span class="p">,</span> <span class="n">article</span><span class="o">.</span><span class="n">views</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-9"></a><span class="gp">...</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-10"></a><span class="go">Ecological Guild Evolution and the Discovery of the World&#39;s Smallest Vertebrate DOI: 10.1371/journal.pone.0029797 Views: 30144</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-11"></a><span class="go">Mitochondrial Electron Transport Is the Cellular Target of the Oncology Drug Elesclomol DOI: 10.1371/journal.pone.0029798 Views: 3515</span>
-</pre></div></p>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-10"></a><span class="go">Ecological Guild Evolution and the Discovery of the World&#39;s Smallest Vertebrate DOI: 10.1371/journal.pone.0029797 Views: 30169</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-11"></a><span class="go">Mitochondrial Electron Transport Is the Cellular Target of the Oncology Drug Elesclomol DOI: 10.1371/journal.pone.0029798 Views: 3527</span>
+</pre></div>
+
 <h3 id="more-detailed-source-information">More Detailed Source Information</h3>
 <p>To obtain more detailed information on each ALM source from the ALM API a request should 
 be made for from detailed information. The options available are <code>event</code>, <code>history</code>, and 
@@ -484,7 +486,7 @@ updated its records are also available from attributes of the source object.</p>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a><span class="go">u&#39;CrossRef&#39;</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-5"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">events_url</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-6"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update_date</span>
-<a name="docs--examples--example.py-idio-pycon-pyg.html-7"></a><span class="go">u&#39;2013-12-21T01:54:20Z&#39;</span>
+<a name="docs--examples--example.py-idio-pycon-pyg.html-7"></a><span class="go">datetime.datetime(2013, 12, 21, 1, 54, 20)</span>
 </pre></div>
 
 <h2 id="working-with-data">Working with data</h2>
