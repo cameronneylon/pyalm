@@ -394,8 +394,8 @@ Change widths as necessary
 </ol>
 </li>
 <li>Working with data<ol>
-<li>Working with events</li>
 <li>Working with history</li>
+<li>Working with events</li>
 </ol>
 </li>
 </ol>
@@ -437,9 +437,9 @@ attribute of the response:  </p>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-4"></a><span class="go">7</span>
 </pre></div>
 
-<p>If a single DOI is given then the returned object will be an ArticleALM object. If 
-multiple DOIs are requested then the returned object will be a list. Multiple DOIs 
-should be passed to the <code>get</code> method as a list of strings.</p>
+<p>The returned object is always a list of ArticleALM objects. If a single DOI is passed
+the list will be of length one. Multiple DOIs should be passed to the <code>get</code> method as a
+list of strings of the form <code>10.1371/journal.pgen.1004001</code>.</p>
 <div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">articles</span> <span class="o">=</span> <span class="n">alm</span><span class="o">.</span><span class="n">get_alm</span><span class="p">(</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="gp">... </span>        <span class="p">[</span><span class="s">&quot;10.1371/journal.pone.0029797&quot;</span><span class="p">,</span><span class="s">&quot;10.1371/journal.pone.0029798&quot;</span><span class="p">],</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="gp">... </span>        <span class="n">info</span><span class="o">=</span><span class="s">&quot;summary&quot;</span><span class="p">)</span>
@@ -515,8 +515,8 @@ App instance updates the record and is not sensitive to the actual events which 
 the count.</p>
 <h3 id="working-with-events">Working with events</h3>
 <p>The event information is available via the <code>events</code> attribute on the source. Event data 
-is not currently parsed from the JSON object and needs to be handled by the user on a 
-source by source basis.</p>
+is not parsed direct from the return JSON object and needs to be handled by the user
+depending on their needs.</p>
 <div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span> <span class="o">=</span> <span class="n">alm</span><span class="o">.</span><span class="n">get_alm</span><span class="p">(</span><span class="s">&quot;10.1371/journal.pone.0029797&quot;</span><span class="p">,</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="gp">... </span>                      <span class="n">info</span><span class="o">=</span><span class="s">&quot;event&quot;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&quot;crossref&quot;</span><span class="p">)</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span>
@@ -526,6 +526,8 @@ source by source basis.</p>
 <div class="highlight"><pre><a name="docs--examples--example.py-idio-pycon-pyg.html-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">article</span><span class="o">.</span><span class="n">sources</span><span class="p">[</span><span class="s">&#39;crossref&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <a name="docs--examples--example.py-idio-pycon-pyg.html-2"></a><span class="go">{u&#39;event_url&#39;: u&#39;http://dx.doi.org/10.1007/s13127-013-0152-4&#39;, u&#39;event&#39;: {u&#39;journal_abbreviation&#39;: u&#39;Org Divers Evol&#39;, u&#39;article_title&#39;: u&#39;New insights into the systematics and molecular phylogeny of the Malagasy snake genus Liopholidophis suggest at least one rapid reversal of extreme sexual dimorphism in tail length&#39;, u&#39;doi&#39;: u&#39;10.1007/s13127-013-0152-4&#39;, u&#39;contributors&#39;: {u&#39;contributor&#39;: [{u&#39;first_author&#39;: u&#39;true&#39;, u&#39;surname&#39;: u&#39;Glaw&#39;, u&#39;given_name&#39;: u&#39;Frank&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;first&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Kucharzewski&#39;, u&#39;given_name&#39;: u&#39;Christoph&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Nagy&#39;, u&#39;given_name&#39;: u&#39;Zolt\xe1n T.&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Hawlitschek&#39;, u&#39;given_name&#39;: u&#39;Oliver&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}, {u&#39;first_author&#39;: u&#39;false&#39;, u&#39;surname&#39;: u&#39;Vences&#39;, u&#39;given_name&#39;: u&#39;Miguel&#39;, u&#39;contributor_role&#39;: u&#39;author&#39;, u&#39;sequence&#39;: u&#39;additional&#39;}]}, u&#39;journal_title&#39;: u&#39;Organisms Diversity &amp; Evolution&#39;, u&#39;fl_count&#39;: u&#39;0&#39;, u&#39;issn&#39;: [u&#39;1439-6092&#39;, u&#39;1618-1077&#39;], u&#39;year&#39;: u&#39;2013&#39;, u&#39;publication_type&#39;: u&#39;full_text&#39;}}</span>
 </pre></div>
+
+<p>The <code>events</code> module provides a set of classes for handling specific types of events.</p>
         </div>
     </div>
     </body>
